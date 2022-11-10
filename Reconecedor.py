@@ -14,11 +14,11 @@ class Reconocerdor:
         self.__grafo2 = grafo2
         self.__cantVertices = grafo1.getCantNodos()
         if self.__grafo1.getCantNodos() == self.__grafo2.getCantNodos() and self.__grafo1.getCantArcos() == self.__grafo2.getCantArcos():
-            self.__matriz1 = self.generarMatrices(grafo1)
-            self.__matriz2 = self.generarMatrices(grafo2)
+            self.__matriz1 = grafo1.getMatriz()
+            self.__matriz2 = grafo2.getMatriz()
             arregloSoluciones = -1*(np.ones(self.__cantVertices,dtype=int))
             
-            print("CantVertices: "+str(self.__cantVertices))
+            
             exito = self.Isomorfismo(0,arregloSoluciones,False)
             if exito:
                 print("Grafos isomorfos")
@@ -28,19 +28,6 @@ class Reconocerdor:
         else:
             print("Grafos Distintos")
 
-   
-    
-    def generarMatrices(self,grafo):
-        matriz = np.zeros((self.__cantVertices,self.__cantVertices),dtype=int)
-        values = list(grafo.getDict().values())
-        keys = list(grafo.getDict().keys())
-        for i in range(len(values)):
-            for j in range(len(values[i])):
-                k = 0
-                while values[i][j] != keys[k]:
-                    k+=1
-                matriz[i][k] = 1
-        return matriz
     
     def Isomorfismo(self,posactual,arregloSoluciones,exito):
         vertice = 0
@@ -52,12 +39,12 @@ class Reconocerdor:
                     return self.Isomorfismo(posactual+1,arregloSoluciones,exito)
                 elif posactual == self.__cantVertices-1:
                     exito = True
-                    print("Entro aca")
+                    
         return exito
 
     def Validar(self,posactual,ArregloSoluciones):
         resultado = True
-        "print(ArregloSoluciones)"
+        
         for i in range(posactual-1):
             if ArregloSoluciones[i] == ArregloSoluciones[posactual]:
                 resultado = False
